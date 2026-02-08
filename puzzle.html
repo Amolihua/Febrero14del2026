@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El puzzle</title>
+    <style>
+        body {
+            background-color: #ffebee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        h2 { color: #c2185b; text-align: center; }
+        
+        .puzzle-container {
+            display: grid;
+            grid-template-columns: 150px 150px;
+            grid-template-rows: 150px 150px;
+            gap: 2px;
+            margin: 20px 0;
+            border: 5px solid #c2185b;
+        }
+
+        .piece {
+            width: 150px;
+            height: 150px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/210/210545.png');
+            background-size: 300px 300px; 
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #p1 { background-position: 0 0; transform: rotate(90deg); }
+        #p2 { background-position: -150px 0; transform: rotate(180deg); }
+        #p3 { background-position: 0 -150px; transform: rotate(270deg); }
+        #p4 { background-position: -150px -150px; transform: rotate(90deg); }
+
+        .btn-no {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #9e9e9e;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>¡Completa el rompecabezas para desbloquear lo siguiente!</h2>
+
+    <div class="puzzle-container">
+        <div class="piece" id="p1" onclick="rotatePiece(this)"></div>
+        <div class="piece" id="p2" onclick="rotatePiece(this)"></div>
+        <div class="piece" id="p3" onclick="rotatePiece(this)"></div>
+        <div class="piece" id="p4" onclick="rotatePiece(this)"></div>
+    </div>
+
+    <a href="no.html" class="btn-no">No lo quiero completar 🙃​</a>
+
+    <script>
+
+        let rotations = { p1: 90, p2: 180, p3: 270, p4: 90 };
+
+        function rotatePiece(element) {
+            const id = element.id;
+            rotations[id] = (rotations[id] + 90) % 360; 
+            element.style.transform = `rotate(${rotations[id]}deg)`;
+            checkWin();
+        }
+
+        function checkWin() {
+
+            if (rotations.p1 === 0 && rotations.p2 === 0 && rotations.p3 === 0 && rotations.p4 === 0) {
+                setTimeout(() => {
+                    window.location.href = "si.html";
+                }, 500); 
+            }
+        }
+    </script>
+</body>
+</html>
